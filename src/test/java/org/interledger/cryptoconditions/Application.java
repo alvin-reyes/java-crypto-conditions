@@ -86,7 +86,7 @@ public class Application {
     final Ed25519Sha256Condition ed25519Condition =
         new Ed25519Sha256Condition((EdDSAPublicKey) edDsaKeyPair.getPublic());
     final PrefixSha256Condition prefixConditionOnEd25519Condition =
-        new PrefixSha256Condition(prefix, 1000, ed25519Condition);
+        new PrefixSha256Condition.Impl(prefix, 1000, ed25519Condition);
     final ThresholdSha256Condition thresholdCondition = new ThresholdSha256Condition(
         2,
         Lists.newArrayList(preimageCondition, rsaCondition, prefixConditionOnEd25519Condition)

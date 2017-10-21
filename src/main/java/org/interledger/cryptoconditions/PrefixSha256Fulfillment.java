@@ -38,8 +38,9 @@ public class PrefixSha256Fulfillment extends FulfillmentBase<PrefixSha256Conditi
     // Fulfillments are immutable, so no need to perform any type of deep-copy here.
     this.subfulfillment = subfulfillment;
 
-    this.condition = new PrefixSha256Condition(prefix, maxMessageLength,
-        subfulfillment.getCondition());
+    this.condition = new PrefixSha256Condition.Impl(
+        prefix, maxMessageLength, subfulfillment.getCondition()
+    );
   }
 
   @Override

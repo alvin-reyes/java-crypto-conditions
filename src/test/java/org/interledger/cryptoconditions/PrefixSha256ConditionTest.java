@@ -27,7 +27,7 @@ public class PrefixSha256ConditionTest extends AbstractCryptoConditionTest {
 
       final PreimageSha256Condition preimageSha256Condition = new PreimageSha256Condition(
           MESSAGE_PREIMAGE.getBytes());
-      final PrefixSha256Condition prefixSha256Condition = new PrefixSha256Condition(
+      final PrefixSha256Condition.Impl prefixSha256Condition = new PrefixSha256Condition.Impl(
           AUTHOR.getBytes(), 16384,
           preimageSha256Condition);
 

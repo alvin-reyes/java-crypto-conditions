@@ -51,7 +51,7 @@ public class TestVectorFactory {
       }
 
       case PREFIX_SHA256: {
-        return new PrefixSha256Condition(
+        return new PrefixSha256Condition.Impl(
             Base64.getUrlDecoder().decode(testVectorJson.getPrefix()),
             testVectorJson.getMaxMessageLength(),
             getConditionFromTestVectorJson(testVectorJson.getSubfulfillment())
