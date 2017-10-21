@@ -1,31 +1,18 @@
 package org.interledger.cryptoconditions;
 
 import com.google.common.collect.Lists;
-
+import javax.xml.bind.DatatypeConverter;
 import net.i2p.crypto.eddsa.EdDSAEngine;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
-
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
 import org.interledger.cryptoconditions.der.DerEncodingException;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.Provider;
-import java.security.Security;
-import java.security.Signature;
-import java.security.SignatureException;
+import java.security.*;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAKeyGenParameterSpec;
-
-import javax.xml.bind.DatatypeConverter;
 
 
 /**
@@ -41,12 +28,13 @@ public class Application {
    * Main class...
    *
    * @param args for this method...
-   * @throws NoSuchAlgorithmException when this happens...
+   *
+   * @throws NoSuchAlgorithmException           when this happens...
    * @throws InvalidAlgorithmParameterException when this happens...
-   * @throws IOException when this happens...
-   * @throws InvalidKeyException when this happens...
-   * @throws SignatureException when this happens...
-   * @throws DerEncodingException when this happens...
+   * @throws IOException                        when this happens...
+   * @throws InvalidKeyException                when this happens...
+   * @throws SignatureException                 when this happens...
+   * @throws DerEncodingException               when this happens...
    */
   public static void main(String[] args) throws NoSuchAlgorithmException,
       InvalidAlgorithmParameterException, IOException, InvalidKeyException, SignatureException, DerEncodingException {
@@ -81,12 +69,12 @@ public class Application {
     edDsaSigner.update(message);
     byte[] edDsaSignature = edDsaSigner.sign();
 
-    final PreimageSha256Condition preimageCondition = new PreimageSha256Condition(preimage);
+    final PreimageSha256Condition preimageCondition = PreimageSha256Condition.of(preimage);
     final RsaSha256Condition rsaCondition = new RsaSha256Condition((RSAPublicKey) rsaKeyPair.getPublic());
     final Ed25519Sha256Condition ed25519Condition =
         new Ed25519Sha256Condition((EdDSAPublicKey) edDsaKeyPair.getPublic());
     final PrefixSha256Condition prefixConditionOnEd25519Condition =
-        new PrefixSha256Condition.Impl(prefix, 1000, ed25519Condition);
+        PrefixSha256Condition.of(prefix, 1000, ed25519Condition);
     final ThresholdSha256Condition thresholdCondition = new ThresholdSha256Condition(
         2,
         Lists.newArrayList(preimageCondition, rsaCondition, prefixConditionOnEd25519Condition)

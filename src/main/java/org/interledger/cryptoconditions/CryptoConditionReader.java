@@ -121,9 +121,9 @@ public class CryptoConditionReader {
 
     switch (type) {
       case PREIMAGE_SHA256:
-        return new PreimageSha256Condition(cost, fingerprint);
+        return PreimageSha256Condition.of(cost, fingerprint);
       case PREFIX_SHA256:
-        return new PrefixSha256Condition.Impl(cost, fingerprint, subtypes);
+        return PrefixSha256Condition.of(cost, fingerprint, subtypes);
       case THRESHOLD_SHA256:
         return new ThresholdSha256Condition(cost, fingerprint, subtypes);
       case RSA_SHA256:

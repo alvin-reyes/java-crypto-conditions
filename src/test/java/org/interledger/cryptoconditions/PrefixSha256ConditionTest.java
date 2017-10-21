@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 import com.google.common.io.BaseEncoding;
-
 import org.junit.Test;
 
 import java.net.URI;
@@ -25,11 +24,12 @@ public class PrefixSha256ConditionTest extends AbstractCryptoConditionTest {
   public void testConstructionUsingMultipleThreads() throws Exception {
     final Runnable runnableTest = () -> {
 
-      final PreimageSha256Condition preimageSha256Condition = new PreimageSha256Condition(
+      final PreimageSha256Condition preimageSha256Condition = PreimageSha256Condition.of(
           MESSAGE_PREIMAGE.getBytes());
-      final PrefixSha256Condition.Impl prefixSha256Condition = new PrefixSha256Condition.Impl(
-          AUTHOR.getBytes(), 16384,
-          preimageSha256Condition);
+      final PrefixSha256Condition.Impl prefixSha256Condition =
+          (PrefixSha256Condition.Impl) PrefixSha256Condition.of(
+              AUTHOR.getBytes(), 16384, preimageSha256Condition
+          );
 
       assertThat(prefixSha256Condition.getType(), is(CryptoConditionType.PREFIX_SHA256));
       assertThat(prefixSha256Condition.getCost(), is(17463L));

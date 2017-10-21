@@ -24,7 +24,7 @@ public class PreimageSha256Fulfillment extends FulfillmentBase<PreimageSha256Con
     super(CryptoConditionType.PREIMAGE_SHA256);
 
     Objects.requireNonNull(preimage);
-    this.condition = new PreimageSha256Condition(preimage);
+    this.condition = PreimageSha256Condition.of(preimage);
     this.preimage = Base64.getUrlEncoder().encodeToString(preimage);
   }
 

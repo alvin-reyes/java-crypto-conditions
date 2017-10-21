@@ -6,11 +6,8 @@ import static org.interledger.cryptoconditions.CryptoConditionType.THRESHOLD_SHA
 
 import com.google.common.collect.Lists;
 import com.google.common.io.BaseEncoding;
-
 import org.hamcrest.CoreMatchers;
-
 import org.interledger.cryptoconditions.der.DerEncodingException;
-
 import org.junit.Test;
 
 /**
@@ -29,8 +26,9 @@ public class ThresholdSha256ConditionTest extends AbstractCryptoConditionTest {
   public void testConstructionUsingMultipleThreads() throws Exception {
     final Runnable runnableTest = () -> {
 
-      final PreimageSha256Condition preimageCondition = new PreimageSha256Condition(
-          AUTHOR.getBytes());
+      final PreimageSha256Condition preimageCondition = PreimageSha256Condition.of(
+          AUTHOR.getBytes()
+      );
 
       final ThresholdSha256Condition thresholdSha256Condition = new ThresholdSha256Condition(
           1, Lists.newArrayList(preimageCondition)

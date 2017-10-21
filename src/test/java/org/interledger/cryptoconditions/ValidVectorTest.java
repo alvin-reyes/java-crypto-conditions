@@ -204,7 +204,7 @@ public class ValidVectorTest {
     final byte[] unhashedFingerprintContents;
     switch (actualTestCondition.getType()) {
       case PREIMAGE_SHA256: {
-        unhashedFingerprintContents = ((PreimageSha256Condition) actualTestCondition)
+        unhashedFingerprintContents = ((PreimageSha256Condition.Impl) actualTestCondition)
             .constructFingerprintContents(
                 BaseEncoding.base64Url().decode(testVector.getJson().getPreimage())
             );

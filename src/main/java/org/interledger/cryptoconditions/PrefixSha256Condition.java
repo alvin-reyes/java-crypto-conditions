@@ -20,6 +20,34 @@ import java.util.Objects;
 public interface PrefixSha256Condition extends CompoundCondition {
 
   /**
+   * Constructs an instance of the condition.
+   *
+   * @param prefix           The prefix to use when creating the fingerprint.
+   * @param maxMessageLength The maximum length of the message.
+   * @param subcondition     A condition on which this condition depends.
+   */
+  static PrefixSha256Condition of(
+      final byte[] prefix, final long maxMessageLength, final Condition subcondition
+  ) {
+    return new Impl(prefix, maxMessageLength, subcondition);
+  }
+
+  /**
+   * Constructs an instance of the condition.
+   * <p/>
+   * Note this constructor is package-private because it is used primarily for testing purposes.
+   *
+   * @param cost        The cost of this condition.
+   * @param fingerprint The calculated fingerprint.
+   * @param subtypes    A set of condition rsa for the conditions that this one depends on.
+   */
+  static PrefixSha256Condition of(
+      final long cost, final byte[] fingerprint, final EnumSet<CryptoConditionType> subtypes
+  ) {
+    return new Impl(cost, fingerprint, subtypes);
+  }
+
+  /**
    * An extension of {@link CompoundSha256Condition} that implements {@link PrefixSha256Condition}.
    */
   final class Impl extends CompoundSha256Condition implements PrefixSha256Condition {
@@ -31,7 +59,7 @@ public interface PrefixSha256Condition extends CompoundCondition {
      * @param maxMessageLength The maximum length of the message.
      * @param subcondition     A condition on which this condition depends.
      */
-    public Impl(
+    private Impl(
         final byte[] prefix, final long maxMessageLength, final Condition subcondition
     ) {
       super(
@@ -53,7 +81,9 @@ public interface PrefixSha256Condition extends CompoundCondition {
      * @param fingerprint The calculated fingerprint.
      * @param subtypes    A set of condition rsa for the conditions that this one depends on.
      */
-    Impl(final long cost, final byte[] fingerprint, final EnumSet<CryptoConditionType> subtypes) {
+    private Impl(
+        final long cost, final byte[] fingerprint, final EnumSet<CryptoConditionType> subtypes
+    ) {
       super(PREFIX_SHA256, cost, fingerprint, subtypes);
     }
 

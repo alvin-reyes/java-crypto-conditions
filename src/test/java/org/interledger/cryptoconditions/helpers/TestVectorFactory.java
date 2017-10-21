@@ -1,20 +1,7 @@
 package org.interledger.cryptoconditions.helpers;
 
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
-
-import org.interledger.cryptoconditions.Condition;
-import org.interledger.cryptoconditions.CryptoConditionType;
-import org.interledger.cryptoconditions.Ed25519Sha256Condition;
-import org.interledger.cryptoconditions.Ed25519Sha256Fulfillment;
-import org.interledger.cryptoconditions.Fulfillment;
-import org.interledger.cryptoconditions.PrefixSha256Condition;
-import org.interledger.cryptoconditions.PrefixSha256Fulfillment;
-import org.interledger.cryptoconditions.PreimageSha256Condition;
-import org.interledger.cryptoconditions.PreimageSha256Fulfillment;
-import org.interledger.cryptoconditions.RsaSha256Condition;
-import org.interledger.cryptoconditions.RsaSha256Fulfillment;
-import org.interledger.cryptoconditions.ThresholdSha256Condition;
-import org.interledger.cryptoconditions.ThresholdSha256Fulfillment;
+import org.interledger.cryptoconditions.*;
 
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
@@ -31,10 +18,10 @@ public class TestVectorFactory {
 
   /**
    * Assembles an instance of {@link Condition} from the information provided in {@code
-   * testVectorJson}, which is generally assembled from a JSON file in this project's test
-   * harness.
+   * testVectorJson}, which is generally assembled from a JSON file in this project's test harness.
    *
    * @param testVectorJson A {@link TestVectorJson} to retrieve a condition from.
+   *
    * @return A {@link Condition} assembled from the supplied test vector data.
    */
   public static Condition getConditionFromTestVectorJson(final TestVectorJson testVectorJson) {
@@ -51,7 +38,7 @@ public class TestVectorFactory {
       }
 
       case PREFIX_SHA256: {
-        return new PrefixSha256Condition.Impl(
+        return PrefixSha256Condition.of(
             Base64.getUrlDecoder().decode(testVectorJson.getPrefix()),
             testVectorJson.getMaxMessageLength(),
             getConditionFromTestVectorJson(testVectorJson.getSubfulfillment())
@@ -101,10 +88,10 @@ public class TestVectorFactory {
 
   /**
    * Assembles an instance of {@link Fulfillment} from the information provided in {@code
-   * testVectorJson}, which is generally assembled from a JSON file in this project's test
-   * harness.
+   * testVectorJson}, which is generally assembled from a JSON file in this project's test harness.
    *
    * @param testVectorJson A {@link TestVectorJson} to retrieve a condition from.
+   *
    * @return A {@link Fulfillment} assembled from the supplied test vector data.
    */
   public static Fulfillment getFulfillmentFromTestVectorJson(final TestVectorJson testVectorJson) {
